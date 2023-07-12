@@ -16,6 +16,7 @@ from engine_finetuning import train_one_epoch, val_one_epoch
 from torch.utils.data import Dataset
 from torch.utils.tensorboard import SummaryWriter
 from util.misc import NativeScalerWithGradNormCount as NativeScaler
+from torch.distributed.elastic.multiprocessing.errors import record
 
 from llama import Tokenizer
 
@@ -139,13 +140,13 @@ def get_args_parser():
 
     # distributed training parameters
     parser.add_argument("--world_size", default=1, type=int, help="number of distributed processes")
-    parser.add_argument("--local_rank", default=-1, type=int)
+    parser.add_argument("--local-rank", default=-1, type=int)
     parser.add_argument("--dist_on_itp", action="store_true")
     parser.add_argument("--dist_url", default="env://", help="url used to set up distributed training")
 
     return parser
 
-
+@record
 def main(args):
 
     misc.init_distributed_mode(args)
