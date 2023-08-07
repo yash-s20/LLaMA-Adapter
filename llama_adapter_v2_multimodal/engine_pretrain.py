@@ -36,7 +36,7 @@ def train_one_epoch(model: LLaMA_adapter,
         imgs = imgs.to(device, non_blocking=True)
         with torch.cuda.amp.autocast():
              c_loss, m_loss = model(examples, labels, imgs)
-        loss = c_loss  + m_loss * 0
+        loss = c_loss  + m_loss * 0 # ???
         loss_value = loss.item()
         c_loss_value = c_loss.item()
         m_loss_value = m_loss

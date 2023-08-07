@@ -2,6 +2,7 @@ import torch
 import torch.backends.cudnn as cudnn
 from torch.utils.tensorboard import SummaryWriter
 from torch.utils.data import Dataset
+from torch.distributed.elastic.multiprocessing.errors import record
 
 import util.misc as misc
 from util.misc import NativeScalerWithGradNormCount as NativeScaler
@@ -84,7 +85,7 @@ def get_args_parser():
 
     return parser
 
-
+@record
 def main(args):
     misc.init_distributed_mode(args)
 
